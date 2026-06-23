@@ -7,6 +7,14 @@
 // GET  /health -> status
 // ============================================================
 
+// ── FONTCONFIG LOCAL (corrige tofu/quadradinhos no PNG) ──────
+// Aponta o fontconfig para a pasta ./fonts ANTES de carregar o sharp.
+const path = require('path');
+const FONT_DIR = path.join(__dirname, 'fonts');
+process.env.FONTCONFIG_FILE = path.join(__dirname, 'fonts.conf');
+process.env.FONTCONFIG_PATH = __dirname;
+// ─────────────────────────────────────────────────────────────
+
 const express = require('express');
 const sharp   = require('sharp');
 const crypto  = require('crypto');
@@ -156,6 +164,7 @@ async function preGerarBase(){
 
 app.listen(PORT,async()=>{
   console.log('bot-viabilidade porta '+PORT);
+  console.log('  fontconfig: '+process.env.FONTCONFIG_FILE);
   await preGerarBase();
   console.log('Pronto.');
 });
